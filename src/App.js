@@ -1,9 +1,11 @@
 import React from 'react'
+import './assets/App.scss'
+import Navigation from './components/Navigation'
 
 const App = () => {
   return (
     <div>
-      <h1>This is my app</h1>
+      <Navigation/>
     </div>
   )
 }
