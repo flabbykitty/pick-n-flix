@@ -22,6 +22,10 @@ const AuthContextProvider = (props) => {
         return auth.signOut()
     }
 
+    const resetPassword = (email) => {
+		return auth.sendPasswordResetEmail(email)
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentUser(user)
@@ -37,6 +41,7 @@ const AuthContextProvider = (props) => {
         login,
         logout,
         signup,
+        resetPassword
 	}
 
 	return (

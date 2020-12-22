@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react'
 import {Alert, Col, Row, Form, Button} from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        setError(false)
+        setError(null)
 
         try {
 			setLoading(true)
@@ -30,6 +30,7 @@ const Login = () => {
         <Row>
             <Col md={{ span: 6, offset: 3 }}>
                 <Form onSubmit={handleSubmit}>
+                    <Form.Text className="h2">Login</Form.Text>
                     {error && (<Alert variant="danger">{error}</Alert>)}
                     <Form.Group>
                         <Form.Control type="email" ref={emailRef} placeholder="Email" />
@@ -42,6 +43,7 @@ const Login = () => {
                     <Button disabled={loading} variant="primary" type="submit">Login</Button>
 
                 </Form>
+                <Link to ="/resetpassword">Forgot your password?</Link>
 
             </Col>
         </Row>

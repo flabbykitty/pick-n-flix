@@ -8,6 +8,7 @@ import Navigation from './components/Navigation'
 import Login from './components/pages/Login'
 import Logout from './components/Logout'
 import Signup from './components/pages/Signup'
+import ResetPassword from './components/pages/ResetPassword'
 import Home from './components/pages/Home'
 
 
@@ -33,6 +34,10 @@ const App = () => {
 
 						<Route path="/signup">
 							<Signup />
+						</Route>
+
+						<Route path="/resetpassword">
+							<ResetPassword />
 						</Route>
 					</Routes>
 				</Container>

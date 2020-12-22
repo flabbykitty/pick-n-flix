@@ -15,7 +15,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        setError(false)
+        setError(null)
 
         if (passwordRef.current.value !== passwordConfRef.current.value) {
 			return setError("The passwords does not match")
@@ -24,7 +24,7 @@ const Signup = () => {
         try {
 			setLoading(true)
 			await signup(emailRef.current.value, passwordRef.current.value)
-			navigate('/')
+            navigate('/')
 		} catch (e) {
 			setError(e.message)
 			setLoading(false)
@@ -35,6 +35,8 @@ const Signup = () => {
         <Row>
             <Col md={{ span: 6, offset: 3 }}>
                 <Form onSubmit={handleSubmit}>
+                    <Form.Text className="h2">Sign up</Form.Text>
+
                     {error && (<Alert variant="danger">{error}</Alert>)}
                     <Form.Group>
                         <Form.Control type="email" ref={emailRef} placeholder="Email" />
