@@ -1,5 +1,5 @@
 import React from 'react'
-import './assets/App.scss'
+import './assets/main.scss'
 import {Container} from 'react-bootstrap'
 import {Routes, Route} from 'react-router-dom'
 import AuthContextProvder from './contexts/AuthContext'

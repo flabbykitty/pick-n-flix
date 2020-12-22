@@ -28,9 +28,9 @@ const Login = () => {
 
     return (
         <Row>
-            <Col md={{ span: 6, offset: 3 }}>
+            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 3 }} className="form-box">
                 <Form onSubmit={handleSubmit}>
-                    <Form.Text className="h2">Login</Form.Text>
+                    <Form.Text className="h2 mb-4">Login</Form.Text>
                     {error && (<Alert variant="danger">{error}</Alert>)}
                     <Form.Group>
                         <Form.Control type="email" ref={emailRef} placeholder="Email" />

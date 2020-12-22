@@ -1,1 +1,72 @@
-@import "~bootstrap/scss/bootstrap";
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $lightColor;
+    color: $darkColor;
+}
+
+
+a {
+    color: $accentColorLight;
+}
+
+a:hover {
+    color: $accentColorDark;
+    text-decoration: underline;
+}
+
+nav {
+    background-color: $accentColorDark;
+    
+    a {
+        color: $darkColor;
+    }
+
+    a:hover {
+        color: $darkColor;
+    }
+}
+
+.navbar-nav {
+    align-items: baseline;
+}
+
+.btn {
+    color: white;
+    background-color: $accentColorLight;
+    border: none;
+    margin: 0.5rem 0;
+}
+
+.btn:hover {
+    background-color: $accentColorDark;
+}
+
+.form-box {
+    border: 2px solid $accentColorDark;
+    padding: 1.5rem 2rem;
+    border-radius: 25px;
+}
+
+
+// sm Tablet 768px
+@media only screen and (min-width: 768px) {
+    
+  }
+
+
+// md small laptops 992px
+
+@media only screen and (min-width: 992px) {
+    
+  }
+
+// lg laptops and desktop 1200px
+
+@media only screen and (min-width: 1200px) {
+    
+  }

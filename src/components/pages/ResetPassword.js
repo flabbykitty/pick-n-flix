@@ -24,9 +24,9 @@ const ResetPassword = () => {
 
     return (
         <Row>
-            <Col md={{ span: 6, offset: 3 }}>
+            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 3 }} className="form-box">
                 <Form onSubmit={handleSubmit}>
-                    <Form.Text className="h2">Reset password</Form.Text>
+                    <Form.Text className="h2 mb-4">Reset password</Form.Text>
                     {error && (<Alert variant="danger">{error}</Alert>)}
 				    {message && (<Alert variant="success">{message}</Alert>)}
 

@@ -33,9 +33,9 @@ const Signup = () => {
 
     return (
         <Row>
-            <Col md={{ span: 6, offset: 3 }}>
+            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 3 }} className="form-box">
                 <Form onSubmit={handleSubmit}>
-                    <Form.Text className="h2">Sign up</Form.Text>
+                    <Form.Text className="h2 mb-4">Sign up</Form.Text>
 
                     {error && (<Alert variant="danger">{error}</Alert>)}
                     <Form.Group>
@@ -50,7 +50,7 @@ const Signup = () => {
                         <Form.Control type="password" ref={passwordConfRef} placeholder="Password confirmation" />
                     </Form.Group>
 
-                    <Button disabled={loading} variant="primary" type="submit">Signup</Button>
+                    <Button disabled={loading} type="submit">Signup</Button>
 
                 </Form>
 
