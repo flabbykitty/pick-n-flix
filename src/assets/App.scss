@@ -42,7 +42,7 @@ nav {
     margin: 0.5rem 0;
 }
 
-.btn:hover {
+.btn:hover, .btn:focus {
     background-color: $accentColorDark;
 }
 
@@ -50,6 +50,21 @@ nav {
     border: 2px solid $accentColorDark;
     padding: 1.5rem 2rem;
     border-radius: 25px;
+}
+
+.movie-item {
+    // display: flex;
+    border: 1px solid $accentColorLight;
+    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
+
+    img {
+        margin-right: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
 }
 
 

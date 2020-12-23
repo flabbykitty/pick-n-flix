@@ -3,44 +3,48 @@ import './assets/main.scss'
 import {Container} from 'react-bootstrap'
 import {Routes, Route} from 'react-router-dom'
 import AuthContextProvder from './contexts/AuthContext'
-
 import Navigation from './components/Navigation'
 import Login from './components/pages/Login'
 import Logout from './components/Logout'
 import Signup from './components/pages/Signup'
 import ResetPassword from './components/pages/ResetPassword'
 import Home from './components/pages/Home'
+import SearchResults from './components/pages/SearchResults'
 
 
 const App = () => {
 	return (
 		<div>
 			<AuthContextProvder>
-				<Navigation/>
+					<Navigation/>
 
-				<Container>
-					<Routes>
-						<Route exact path="/">
-							<Home />
-						</Route>
+					<Container>
+						<Routes>
+							<Route exact path="/">
+								<Home />
+							</Route>
 
-						<Route path="/login">
-							<Login />
-						</Route>
+							<Route path="/login">
+								<Login />
+							</Route>
 
-						<Route path="/logout">
-							<Logout />
-						</Route>
+							<Route path="/logout">
+								<Logout />
+							</Route>
 
-						<Route path="/signup">
-							<Signup />
-						</Route>
+							<Route path="/signup">
+								<Signup />
+							</Route>
 
-						<Route path="/resetpassword">
-							<ResetPassword />
-						</Route>
-					</Routes>
-				</Container>
+							<Route path="/resetpassword">
+								<ResetPassword />
+							</Route>
+
+							<Route path="/search">
+								<SearchResults />
+							</Route>
+						</Routes>
+					</Container>
 
 			</AuthContextProvder>
 		</div>
