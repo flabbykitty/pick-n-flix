@@ -19,19 +19,16 @@ const SearchBar = () => {
     }
     return (
         <Row>
-            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 3 }}>
+            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 3 }} className="search-bar">
+                {error && (<Alert variant="danger">{error}</Alert>)}
                 <Form onSubmit={handleSubmit}>
-                    {error && (<Alert variant="danger">{error}</Alert>)}
-                    <Form.Text className="h2 mb-4">Search</Form.Text>
 
                     <Form.Group>
-                        <Form.Control type="text" ref={searchRef} placeholder="Search" />
+                        <Form.Control autoFocus type="text" ref={searchRef} placeholder="Search" />
                     </Form.Group>
 
-                    <Button type="submit">Search</Button>
-
+                        <Button type="submit">Search</Button>
                 </Form>
-
             </Col>
         </Row>
     )

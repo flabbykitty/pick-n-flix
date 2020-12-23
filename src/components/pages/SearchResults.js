@@ -17,7 +17,7 @@ const SearchResults = () => {
     }
 
     const { data, error, isLoading, refetch } = useQuery(
-        'movies',
+        ['movies', page],
         () => searchMovies(apiKey, query, page),
         { keepPreviousData: true }
       )
@@ -43,9 +43,11 @@ const SearchResults = () => {
     }
     
     return (
-        <>
-        <SearchBar/>
-			<p>Page {data.page} out of {data.total_pages}</p>
+        <div className="search-results">
+            <SearchBar/>
+			
+            <h1>{data.total_results} {data.total_results === 1 ? 'result' : 'results'} for '{query}'</h1>
+            <p>Page {data.page} out of {data.total_pages}</p>
 
 			<div className="d-flex mb-3 justify-content-between">
 				<Button
@@ -64,7 +66,6 @@ const SearchResults = () => {
 			</div>
             {data && (
                 <>
-                    <h1>{data.total_results} {data.total_results === 1 ? 'result' : 'results'} for '{query}'</h1>
                     <div>
                         {data.results.map((movie, index) => (
                             <div key={index}>
@@ -74,7 +75,7 @@ const SearchResults = () => {
                     </div>
                 </>
             )}
-		</>
+		</div>
     )
 }
 

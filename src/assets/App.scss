@@ -9,7 +9,6 @@ body {
     color: $darkColor;
 }
 
-
 a {
     color: $accentColorLight;
 }
@@ -53,15 +52,48 @@ nav {
 }
 
 .movie-item {
-    // display: flex;
     border: 1px solid $accentColorLight;
     margin-bottom: 2rem;
     padding: 1rem 1.5rem;
+    overflow: auto;
 
     img {
         margin-right: 1rem;
+        max-width: 100px;
+        float: left;
     }
 
+    h1 {
+        font-size: 1rem;
+        color: $accentColorDark;
+    }
+
+    span {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.search-bar {
+    form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        width: 100%;
+        margin-bottom: 0;
+        margin-right: 1rem;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 10px $accentColorDark;
+        border-color: $accentColorDark;
+    }
+}
+
+.search-results {
     h1 {
         font-size: 2rem;
     }

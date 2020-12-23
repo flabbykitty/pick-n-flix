@@ -13,7 +13,7 @@ const MovieItem = (props) => {
             {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
             <div>
                 <h1>{title}</h1>
-                <p>{release_date}</p>
+                <span>{release_date}</span>
                 <p>{overview}</p>
             </div>
         </div>
