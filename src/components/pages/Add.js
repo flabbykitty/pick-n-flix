@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
 
-import { db } from '../../firebase/index'
+import firebase, { db } from '../../firebase/index'
 
 // TODO:
 // add rating
@@ -31,11 +31,11 @@ const Add = () => {
     }
 
     const getLists = () => {
-        db.collection("lists").where("owner", "==", currentUser.uid)
+        db.collection("lists").where("user_id", "==", currentUser.uid)
         .get()
         .then((snap) => {
             snap.forEach((doc) => {
-                setLists(o => [...o, doc.data().name])
+                setLists(o => [...o, doc.data().list_name])
             });
         })
         .catch((error) => {
@@ -55,21 +55,35 @@ const Add = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        db.collection("movies").doc().set({
-            ...data,
-            user: currentUser.uid,
-            own, 
-            seen, 
-            dateSeen,
-            ...(own && { format }),
-            lists: checkedLists,
+
+        checkedLists.forEach(m => {
+            db.collection("lists").where("list_name", "==", m).where("user_id", "==", currentUser.uid)
+            .get()
+            .then((snap) => {
+                snap.forEach(doc => {
+                    db.collection("lists").doc(doc.id).update({
+                        movies: firebase.firestore.FieldValue.arrayUnion(
+                            {...data, 
+                            own, 
+                            seen, 
+                            date_seen: dateSeen, 
+                            ...(own && { format })
+                            })
+                    })
+                    .then(() => {
+                        console.log("Document successfully written!");
+                    })
+                    .catch((error) => {
+                        console.error("Error writing document: ", error);
+                    });
+                })
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
         })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+
+
     }
 
     if(isLoading) {
