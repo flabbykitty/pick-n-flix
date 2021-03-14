@@ -1,0 +1,38 @@
+#search-results {
+    .grid-container {
+        columns: 3 300px;
+        gap: 15px;
+        margin-bottom: 40px;
+
+        .movie-item {
+            display: inline-block;
+            margin-bottom: 15px;
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                width:100%;
+            }
+        }
+    }
+}
+
+// sm Tablet 768px
+@media only screen and (min-width: 768px) {
+    
+}
+
+
+// md small laptops 992px
+
+@media only screen and (min-width: 992px) {
+  
+}
+
+// lg laptops and desktop 1200px
+
+@media only screen and (min-width: 1200px) {
+  
+}

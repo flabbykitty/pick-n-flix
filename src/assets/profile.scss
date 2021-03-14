@@ -1,4 +1,9 @@
 #profile {
+
+    h1 {
+        margin-bottom: 40px;
+    }
+    
     .grid-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

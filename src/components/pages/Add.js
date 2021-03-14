@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -12,9 +12,9 @@ import firebase, { db } from '../../firebase/index'
 // add new list
 // check that checkedList is not empty
 // error
-// redirect
 
 const Add = () => {
+    let navigate = useNavigate()
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
     const { id } = useParams()
     const { currentUser } = useContext(AuthContext)
@@ -71,6 +71,7 @@ const Add = () => {
                             })
                     })
                     .then(() => {
+                        navigate('/profile')
                         console.log("Document successfully written!");
                     })
                     .catch((error) => {

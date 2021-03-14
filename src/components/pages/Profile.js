@@ -27,7 +27,7 @@ const Profile = () => {
     return (
         <div id="profile">
             <h1>{currentUser.displayName ? currentUser.displayName : currentUser.email}</h1>
-            {lists && (
+            {lists ? (
                 <div className="grid-container">
 
                     {lists.map(l => (
@@ -51,6 +51,8 @@ const Profile = () => {
                         </div>
                     ))}
                 </div>
+            ) : (
+                <p>You have no lists yet, how about adding one?</p>
             )}
         </div>
     )
