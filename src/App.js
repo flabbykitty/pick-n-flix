@@ -10,6 +10,7 @@ import Signup from './components/pages/Signup'
 import ResetPassword from './components/pages/ResetPassword'
 import Home from './components/pages/Home'
 import SearchResults from './components/pages/SearchResults'
+import Add from './components/pages/Add'
 
 
 const App = () => {
@@ -42,6 +43,10 @@ const App = () => {
 
 							<Route path="/search">
 								<SearchResults />
+							</Route>
+
+							<Route path="/profile/add/:id">
+								<Add />
 							</Route>
 						</Routes>
 					</Container>

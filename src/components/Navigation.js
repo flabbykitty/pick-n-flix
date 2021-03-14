@@ -28,9 +28,6 @@ const Navigation = () => {
                                 <NavLink to="/signup">Signup</NavLink>
                             </>)
                         }
-
-
-
                         
                     </Nav>
                 </Navbar.Collapse>

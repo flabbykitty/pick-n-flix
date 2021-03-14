@@ -1,8 +1,12 @@
 import React from 'react'
+import {Button} from 'react-bootstrap'
+import {useAuth} from '../contexts/AuthContext'
+import {Link} from 'react-router-dom'
 
 const MovieItem = (props) => {
-    const {title, overview, release_date, poster_path} = props.movie
+    const {title, overview, release_date, poster_path, id} = props.movie
     let poster = null
+    const {currentUser} = useAuth()
     
     if(poster_path) {
         poster = `https://image.tmdb.org/t/p/w200${poster_path}`
@@ -10,7 +14,11 @@ const MovieItem = (props) => {
 
     return (
         <div className="movie-item">
-            {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
+            <div className="float-left">
+                {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
+                {currentUser && <Link to={`/profile/add/${id}`}><Button>Add to list</Button></Link>}
+                
+            </div>
             <div>
                 <h1>{title}</h1>
                 <span>{release_date}</span>

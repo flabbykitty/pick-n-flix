@@ -51,6 +51,10 @@ nav {
     border-radius: 25px;
 }
 
+.float-left {
+    float: left;
+}
+
 .movie-item {
     border: 1px solid $accentColorLight;
     margin-bottom: 2rem;
@@ -60,7 +64,6 @@ nav {
     img {
         margin-right: 1rem;
         max-width: 100px;
-        float: left;
     }
 
     h1 {
@@ -71,6 +74,16 @@ nav {
     span {
         display: block;
         margin-bottom: 0.5rem;
+    }
+
+    .float-left {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        max-width: 100px;
+        border-radius: 0;
     }
 }
 
