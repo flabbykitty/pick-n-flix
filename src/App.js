@@ -11,6 +11,7 @@ import ResetPassword from './components/pages/ResetPassword'
 import Home from './components/pages/Home'
 import SearchResults from './components/pages/SearchResults'
 import Add from './components/pages/Add'
+import Profile from './components/pages/Profile'
 
 
 const App = () => {
@@ -47,6 +48,10 @@ const App = () => {
 
 							<Route path="/profile/add/:id">
 								<Add />
+							</Route>
+
+							<Route path="/profile/">
+								<Profile />
 							</Route>
 						</Routes>
 					</Container>
