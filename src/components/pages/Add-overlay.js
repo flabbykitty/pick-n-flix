@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -13,10 +13,9 @@ import firebase, { db } from '../../firebase/index'
 // check that checkedList is not empty
 // error
 
-const Add = () => {
+const Add = (props) => {
     let navigate = useNavigate()
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
-    const { id } = useParams()
     const { currentUser } = useContext(AuthContext)
     const [seen, setSeen] = useState(false)
     const [own, setOwn] = useState(false)
@@ -26,9 +25,14 @@ const Add = () => {
     const [lists, setLists] = useState([])
 
     const getMovie = async () => {
-        const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
+        const res = await axios.get(`https://api.themoviedb.org/3/movie/${props.id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
         return res.data
     }
+
+    const { data, error, isLoading } = useQuery(
+        ['movie'],
+        () => getMovie(props.id, apiKey)
+      )
 
     const getLists = () => {
         db.collection("lists").where("user_id", "==", currentUser.uid)
@@ -42,11 +46,6 @@ const Add = () => {
             console.log("Error getting documents: ", error);
         });
     }
-
-    const { data, error, isLoading } = useQuery(
-        ['movie'],
-        () => getMovie(id, apiKey)
-      )
 
 
     useEffect(() => {
@@ -71,6 +70,7 @@ const Add = () => {
                             })
                     })
                     .then(() => {
+                        // Maybe not navigate? Just close the overlay?
                         navigate('/profile')
                         console.log("Document successfully written!");
                     })
@@ -83,8 +83,6 @@ const Add = () => {
                 console.log("Error getting documents: ", error);
             });
         })
-
-
     }
 
     if(isLoading) {
@@ -95,21 +93,8 @@ const Add = () => {
 
     return (
         <div id="add">
-        {/* {console.log(data)} */}
-        {/* <div className="add-info-container">
-            <img src={`https://image.tmdb.org/t/p/w200${data.poster_path}`}></img>
-            <div>
-                <div className="add-header">
-                    <h1>{data.title}</h1>
-                    {data.release_date}
-                </div>
-                <div className="add-body">
-                    <p>{data.overview}</p>
 
-                </div>
-
-            </div>
-        </div> */}
+        <h1>Add movie</h1>
 
         <div className="add-form-container">
             <Form onSubmit={handleSubmit}>
