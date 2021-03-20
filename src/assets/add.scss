@@ -1,4 +1,24 @@
+#add {
+    .add-list-button {
+        border: none;
+        padding: 0;
+        margin: 0;
 
+        &:hover {
+            background-color: $accentColorLight;
+            color: $accentColorDark;
+        }
+    }
+
+    .add-list-input {
+        margin-top: 5px;
+    }
+
+    .add-list-container {
+        background-color: $accentColorDark;
+        padding: 5px;
+    }
+}
 
 // sm Tablet 768px
 @media only screen and (min-width: 768px) {

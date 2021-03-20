@@ -2,6 +2,10 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 import { db } from '../../firebase/index'
 
+// TODO:
+// Add lists
+// If the list doesn't have any movies, prompt the user to add movies
+
 const Profile = () => {
     const { currentUser } = useContext(AuthContext)
     const [lists, setLists] = useState([])

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
@@ -23,6 +23,8 @@ const Add = (props) => {
     const [format, setFormat] = useState("DVD")
     const [checkedLists, setCheckedLists] = useState([])
     const [lists, setLists] = useState([])
+    const [showAddListInput, setShowAddListInput] = useState(false)
+    const addListRef = useRef()
 
     const getMovie = async () => {
         const res = await axios.get(`https://api.themoviedb.org/3/movie/${props.id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
@@ -35,6 +37,7 @@ const Add = (props) => {
       )
 
     const getLists = () => {
+        setLists([])
         db.collection("lists").where("user_id", "==", currentUser.uid)
         .get()
         .then((snap) => {
@@ -83,6 +86,21 @@ const Add = (props) => {
                 console.log("Error getting documents: ", error);
             });
         })
+    }
+
+    const handleAddList = (e) => {
+        db.collection("lists").add({
+            list_name: addListRef.current.value,
+            user_id: currentUser.uid
+        })
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            getLists()
+            setShowAddListInput(false)
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
     }
 
     if(isLoading) {
@@ -141,6 +159,17 @@ const Add = (props) => {
                                 setCheckedLists(o => [...o, e.target.value]) : 
                                 setCheckedLists(checkedLists.filter(l => l !== e.target.value))}}/>
                     ))}
+                    {!showAddListInput && <Button className="add-list-button" onClick={() => setShowAddListInput(true)}>+ Add list</Button>}
+                    {showAddListInput && 
+                        (
+                            <div className="add-list-container">
+                                <Form.Control className="add-list-input" type="text" placeholder="Enter name of list" ref={addListRef} />
+                                <Button onClick={handleAddList}>Save</Button>
+                                <Button onClick={() => setShowAddListInput(false)}>Cancel</Button>
+                            </div>
+                        )
+                    }
+                    
                 </Form.Group>
 
                 <Button variant="primary" type="submit">Add</Button>
