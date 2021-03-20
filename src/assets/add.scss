@@ -18,6 +18,14 @@
         background-color: $accentColorDark;
         padding: 5px;
     }
+
+    .Toastify__toast-container {
+        width: 100%;
+    }
+
+    .Toastify__toast--error {
+        background-color: $accentColorDark;
+    }
 }
 
 // sm Tablet 768px

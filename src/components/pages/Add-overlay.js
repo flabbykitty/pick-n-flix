@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Toast } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
+import { ToastContainer, toast } from 'react-toastify';
 
 import firebase, { db } from '../../firebase/index'
+
 
 // TODO:
 // add rating
@@ -25,7 +27,7 @@ const Add = (props) => {
     const [lists, setLists] = useState([])
     const [showAddListInput, setShowAddListInput] = useState(false)
     const addListRef = useRef()
-
+    
     const getMovie = async () => {
         const res = await axios.get(`https://api.themoviedb.org/3/movie/${props.id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
         return res.data
@@ -57,6 +59,14 @@ const Add = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if(checkedLists.length <= 0) {
+            toast.error("Please choose a list!", {
+                position: "top-center",
+                autoClose: 2000,
+            });
+            return
+        }
 
         checkedLists.forEach(m => {
             db.collection("lists").where("list_name", "==", m).where("user_id", "==", currentUser.uid)
@@ -171,6 +181,8 @@ const Add = (props) => {
                     }
                     
                 </Form.Group>
+
+                <ToastContainer class="add-toast"/>
 
                 <Button variant="primary" type="submit">Add</Button>
             </Form>

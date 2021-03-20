@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import {Button, Overlay} from 'react-bootstrap'
 import {useAuth} from '../contexts/AuthContext'
-import {Link} from 'react-router-dom'
 import AddOverlay from '../components/pages/Add-overlay'
 
 const MovieItem = (props) => {
@@ -19,14 +18,11 @@ const MovieItem = (props) => {
         <div className="movie-item">
             <div className="float-left">
                 {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
-                {/* {currentUser && <Link to={`/profile/add/${id}`}><Button >Add to list</Button></Link>} */}
-                {/* {currentUser && <Button type="button" className="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Add to list</Button>} */}
-
 
                 {currentUser && (
                     <>
                     <Button variant="danger" ref={target} onClick={() => setShow(!show)}>
-                        Click me to see
+                        Add
                     </Button>
                     <Overlay target={target.current} show={show} placement="right">
                         {({ placement, arrowProps, show: _show, popper, ...props }) => (

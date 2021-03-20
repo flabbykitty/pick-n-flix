@@ -47,23 +47,28 @@ const SearchResults = () => {
             <SearchBar/>
 			
             <h1>{data.total_results} {data.total_results === 1 ? 'result' : 'results'} for '{query}'</h1>
-            <p>Page {data.page} out of {data.total_pages}</p>
 
-			<div className="d-flex mb-3 justify-content-between">
-				<Button
-					onClick={() => setPage(prevPage => (data.page === 1)
+			{data.total_results > 0 && (
+				<>
+            	<p>Page {data.page} out of {data.total_pages}</p>
+				<div className="d-flex mb-3 justify-content-between">
+					<Button
+						onClick={() => setPage(prevPage => (data.page === 1)
+								? prevPage
+								: prevPage - 1)}
+						disabled={data.page === 1}
+						className="btn btn-outline-secondary">Previous Page</Button>
+
+					<Button
+						onClick={() => setPage(prevPage => (data.page === data.total_pages)
 							? prevPage
-							: prevPage - 1)}
-					disabled={data.page === 1}
-					className="btn btn-outline-secondary">Previous Page</Button>
+							: prevPage + 1)}
+						disabled={data.page === data.total_pages || data.total_pages === 0}
+						className="btn btn-outline-secondary">Next Page</Button>
+				</div>
+				</>
+			)}
 
-				<Button
-					onClick={() => setPage(prevPage => (data.page === data.total_pages)
-						? prevPage
-						: prevPage + 1)}
-					disabled={data.page === data.total_pages || data.total_pages === 0}
-					className="btn btn-outline-secondary">Next Page</Button>
-			</div>
             {data && (
                 <>
                     <div className="grid-container">
@@ -76,23 +81,25 @@ const SearchResults = () => {
                 </>
             )}
 
-            <div className="d-flex mb-3 justify-content-between align-items-center">
-				<Button
-					onClick={() => setPage(prevPage => (data.page === 1)
+            {data.total_results > 0 && (
+				<div className="d-flex mb-3 justify-content-between align-items-center">
+					<Button
+						onClick={() => setPage(prevPage => (data.page === 1)
+								? prevPage
+								: prevPage - 1)}
+						disabled={data.page === 1}
+						className="btn btn-outline-secondary">Previous Page</Button>
+
+					<p>Page {data.page} out of {data.total_pages}</p>
+
+					<Button
+						onClick={() => setPage(prevPage => (data.page === data.total_pages)
 							? prevPage
-							: prevPage - 1)}
-					disabled={data.page === 1}
-					className="btn btn-outline-secondary">Previous Page</Button>
-
-                <p>Page {data.page} out of {data.total_pages}</p>
-
-				<Button
-					onClick={() => setPage(prevPage => (data.page === data.total_pages)
-						? prevPage
-						: prevPage + 1)}
-					disabled={data.page === data.total_pages || data.total_pages === 0}
-					className="btn btn-outline-secondary">Next Page</Button>
-			</div>
+							: prevPage + 1)}
+						disabled={data.page === data.total_pages || data.total_pages === 0}
+						className="btn btn-outline-secondary">Next Page</Button>
+				</div>
+			)}
 		</div>
     )
 }
