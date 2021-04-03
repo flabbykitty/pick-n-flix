@@ -11,8 +11,6 @@ import firebase, { db } from '../../firebase/index'
 
 // TODO:
 // add rating
-// add new list
-// check that checkedList is not empty
 // error
 
 const Add = (props) => {
@@ -81,7 +79,12 @@ const Add = (props) => {
                             date_seen: dateSeen, 
                             ...(own && { format })
                             })
+                        // movies: firebase.firestore.FieldValue.arrayUnion(data.id)
                     })
+
+                    // db.collection("movies").doc(data.id.toString()).set({
+                    //     ...data
+                    // })
                     .then(() => {
                         // Maybe not navigate? Just close the overlay?
                         navigate('/profile')

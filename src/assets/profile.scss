@@ -21,11 +21,28 @@
 
         li {
             margin-bottom: 15px;
+            position: relative
         }
+
+        li:hover .edit-buttons {
+            display: inline-block
+         }
 
         img {
             max-height:100px;
             margin-right: 10px;
+        }
+    }
+
+    .edit-buttons {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        button {
+            background-color: transparent;
+            padding: 0;
         }
     }
 
