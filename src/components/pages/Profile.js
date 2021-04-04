@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
+import { ListContext } from '../../contexts/ListContext'
 import { db } from '../../firebase/index'
-import { Button } from 'react-bootstrap'
+import MovieItem from '../MovieItem'
 
 // TODO:
 // Edit list
@@ -9,47 +10,11 @@ import { Button } from 'react-bootstrap'
 
 const Profile = () => {
     const { currentUser } = useContext(AuthContext)
-    const [lists, setLists] = useState([])
-
-    const getLists = () => {
-        setLists([])
-        db.collection("lists").where("user_id", "==", currentUser.uid).get()
-        .then((snap) => {
-            snap.forEach((doc) => {
-                setLists(o => [...o, {...doc.data()}])
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
-    }
+    const { lists, getLists } = useContext(ListContext)
 
     useEffect(() => {
         getLists()
     }, [])
-
-    const handleEditMovie = (e) => {
-        console.log(e)
-        // change seen/rating/own, in all the lists
-    }
-
-    const handleDeleteMovie = (e) => {
-        const list_name = e.target.attributes.list_name.value
-        const movie_id = e.target.attributes.movie_id.value
-
-        db.collection("lists").where("list_name", "==", list_name).get()
-        .then((snap) => {
-            snap.forEach(doc => {
-                db.collection("lists").doc(doc.id).set({
-                    ...doc.data(), movies: doc.data().movies.filter(m => m.id != movie_id)
-                })
-            })
-            getLists()
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        })     
-    }
-    
 
     return (
         <div id="profile">
@@ -64,14 +29,7 @@ const Profile = () => {
                             {l.movies && l.movies.length > 0 ? (
                                 <>
                                     {l.movies.map(m => (
-                                        <li key={m.id}>
-                                        {m.poster_path ? <img src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}
-                                            {m.title} ({m.release_date.substring(0,4)})
-                                            <div className="edit-buttons">
-                                                <Button onClick={handleEditMovie} movie_id={m.id} >🖋</Button>
-                                                <Button onClick={handleDeleteMovie} movie_id={m.id} list_name={l.list_name}>🗑</Button>
-                                            </div>
-                                        </li>
+                                        <MovieItem movie={m} list={l.list_name} type='edit'/>
                                     ))}
                                 </>
                             ) : (

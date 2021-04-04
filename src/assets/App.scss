@@ -55,38 +55,6 @@ nav {
     float: left;
 }
 
-.movie-item {
-    border: 2px solid $accentColorLight;
-    margin-bottom: 2rem;
-    padding: 1rem 1.5rem;
-    overflow: auto;
-
-    img {
-        margin-right: 1rem;
-        max-width: 100px;
-    }
-
-    h1 {
-        font-size: 1rem;
-        color: $accentColorDark;
-    }
-
-    span {
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    .float-left {
-        display: flex;
-        flex-direction: column;
-    }
-
-    button {
-        max-width: 100px;
-        border-radius: 0;
-    }
-}
-
 .search-bar {
     form {
         display: flex;

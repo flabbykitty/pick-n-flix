@@ -4,12 +4,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
+import { ListContext } from '../../contexts/ListContext'
 
 import firebase, { db } from '../../firebase/index'
 
 // TODO:
 // add rating
-// add new list
 // check that checkedList is not empty
 // error
 
@@ -18,39 +18,25 @@ const Add = () => {
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
     const { id } = useParams()
     const { currentUser } = useContext(AuthContext)
+    const { listNames, getArrayOfLists } = useContext(ListContext)
     const [seen, setSeen] = useState(false)
     const [own, setOwn] = useState(false)
     const [dateSeen, setDateSeen] = useState(null)
     const [format, setFormat] = useState("DVD")
     const [checkedLists, setCheckedLists] = useState([])
-    const [lists, setLists] = useState([])
 
     const getMovie = async () => {
         const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
         return res.data
     }
 
-    const getLists = () => {
-        db.collection("lists").where("user_id", "==", currentUser.uid)
-        .get()
-        .then((snap) => {
-            snap.forEach((doc) => {
-                setLists(o => [...o, doc.data().list_name])
-            });
-        })
-        .catch((error) => {
-            console.log("Error getting documents: ", error);
-        });
-    }
-
     const { data, error, isLoading } = useQuery(
         ['movie'],
         () => getMovie(id, apiKey)
-      )
-
+    )
 
     useEffect(() => {
-        getLists()
+        getArrayOfLists()
     }, [])
 
     const handleSubmit = (e) => {
@@ -96,7 +82,7 @@ const Add = () => {
     return (
         <div id="add">
         {/* {console.log(data)} */}
-        {/* <div className="add-info-container">
+        <div className="add-info-container">
             <img src={`https://image.tmdb.org/t/p/w200${data.poster_path}`}></img>
             <div>
                 <div className="add-header">
@@ -109,7 +95,7 @@ const Add = () => {
                 </div>
 
             </div>
-        </div> */}
+        </div>
 
         <div className="add-form-container">
             <Form onSubmit={handleSubmit}>
@@ -147,7 +133,7 @@ const Add = () => {
 
                 <Form.Group controlId="selectList">
                     <Form.Label>Add to list/s</Form.Label>
-                    {lists.map(list => (
+                    {listNames.map(list => (
                         <Form.Check 
                             type="checkbox" 
                             label={list} 

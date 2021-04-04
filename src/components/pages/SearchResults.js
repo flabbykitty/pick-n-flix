@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useLocation} from 'react-router-dom'
 import axios from 'axios';
 import {useQuery} from 'react-query'
-import MovieItem from '../MovieItem-overlay'
+import MovieItem from '../MovieItem'
 import SearchBar from '../SearchBar'
 import {Button} from 'react-bootstrap'
 
@@ -73,9 +73,7 @@ const SearchResults = () => {
                 <>
                     <div className="grid-container">
                         {data.results.map((movie, index) => (
-                            <div key={index}>
-                                <MovieItem movie={movie} />
-                            </div>
+                            <MovieItem key={index} movie={movie} />
                         ))}
                     </div>
                 </>

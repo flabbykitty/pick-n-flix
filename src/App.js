@@ -3,6 +3,8 @@ import './assets/main.scss'
 import {Container} from 'react-bootstrap'
 import {Routes, Route} from 'react-router-dom'
 import AuthContextProvder from './contexts/AuthContext'
+import ListContextProvder from './contexts/ListContext'
+
 import Navigation from './components/Navigation'
 import Login from './components/pages/Login'
 import Logout from './components/Logout'
@@ -11,6 +13,7 @@ import ResetPassword from './components/pages/ResetPassword'
 import Home from './components/pages/Home'
 import SearchResults from './components/pages/SearchResults'
 import Add from './components/pages/Add'
+import Edit from './components/pages/Edit'
 import Profile from './components/pages/Profile'
 
 
@@ -18,6 +21,9 @@ const App = () => {
 	return (
 		<div>
 			<AuthContextProvder>
+
+				<ListContextProvder>
+
 					<Navigation/>
 
 					<Container>
@@ -50,12 +56,18 @@ const App = () => {
 								<Add />
 							</Route>
 
+							<Route path="/profile/edit/:id">
+								<Edit />
+							</Route>
+
 							<Route path="/profile/">
 								<Profile />
 							</Route>
 						</Routes>
 					</Container>
 
+				</ListContextProvder>
+				
 			</AuthContextProvder>
 		</div>
 	)
