@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ListContext } from '../../contexts/ListContext'
-import { db } from '../../firebase/index'
 import MovieItem from '../MovieItem'
+import SearchBar from '../SearchBar'
 
 // TODO:
 // Edit list
@@ -40,7 +40,10 @@ const Profile = () => {
                     ))}
                 </div>
             ) : (
-                <p>You have no lists yet, how about adding one?</p>
+                <div class="text-center">
+                    <p>You have no lists yet, let's start with finding a good movie</p>
+                    <SearchBar/>
+                </div>
             )}
         </div>
     )
