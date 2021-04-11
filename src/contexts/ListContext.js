@@ -13,21 +13,71 @@ const ListContextProvider = (props) => {
     const [loading, setLoading] = useState(true)
 	const [lists, setLists] = useState([])
 	const [listNames, setListNames] = useState([])
+	const [listsThatContainMovie, setListsThatContainMovie] = useState([])
+	const [movie, setMovie] = useState(null)
+	const [seen, setSeen] = useState(false)
+    const [own, setOwn] = useState(false)
+    const [dateSeen, setDateSeen] = useState(null)
+    const [format, setFormat] = useState("DVD")
+    const [checkedLists, setCheckedLists] = useState(listNames)
 
+	// get all the lists of a user
 	const getLists = () => {
 		setLists([])
 		db.collection("lists").where("user_id", "==", currentUser.uid).get()
         .then((snap) => {
             snap.forEach((doc) => {
-				console.log(doc.data())
                 setLists(o => [...o, {...doc.data()}])
             });
+			setLoading(false)
         })
         .catch((error) => {
             console.log("Error getting documents: ", error);
         });
 	}
 
+	// get an array of the lists of that user that contain a specific movie
+	const getWhatListsContainsMovie = (movie) => {
+		if(currentUser.uid) {
+			db.collection('lists').where("user_id", "==", currentUser.uid)
+			.get()
+			.then((snap) => {
+				let tempListArray = []
+				snap.forEach((doc) => {
+					if(doc.data().movies) {
+						if(doc.data().movies.find(m => m.id == movie)) {
+							tempListArray.push(doc.data().list_name)
+						}
+					}
+				});
+				setCheckedLists(tempListArray)
+				setListsThatContainMovie(tempListArray)
+				getMovieFromList(movie, tempListArray[0])
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
+		}
+	}
+
+	const getMovieFromList = (movie, list) => {
+		db.collection("lists").where("list_name", "==", list).get()
+        .then((snap) => {
+            snap.forEach(doc => {
+				const tempMovie = doc.data().movies.find(m => m.id == movie)
+				console.log('tempMovie', tempMovie)
+				setMovie(tempMovie)
+				setSeen(tempMovie.seen)
+				setOwn(tempMovie.own)
+				setDateSeen(tempMovie.date_seen)
+				setFormat(tempMovie.format || "DVD")
+			})
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        })
+	}
+
+	// get only the list names of the lists of a user
 	const getArrayOfLists = () => {
 		setListNames([])
 		db.collection("lists").where("user_id", "==", currentUser.uid)
@@ -41,6 +91,7 @@ const ListContextProvider = (props) => {
             console.log("Error getting documents: ", error);
         });
 	}
+
 
 	const getList = (userId, listName) => {}
 
@@ -61,7 +112,6 @@ const ListContextProvider = (props) => {
 	}
 
 	const removeMovieFromList = (list, movie) => {
-		console.log(list, movie)
 		db.collection("lists").where("list_name", "==", list).get()
         .then((snap) => {
             snap.forEach(doc => {
@@ -77,8 +127,22 @@ const ListContextProvider = (props) => {
 
 	const contextValues = {
 		lists,
+		movie,
+		seen,
+		setSeen,
+		own,
+		setOwn,
+		dateSeen,
+		setDateSeen,
+		format,
+		setFormat,
+		checkedLists,
+		setCheckedLists,
 		listNames,
+		loading,
 		getLists,
+		getWhatListsContainsMovie,
+		listsThatContainMovie,
 		removeMovieFromList,
 		getArrayOfLists
 	}

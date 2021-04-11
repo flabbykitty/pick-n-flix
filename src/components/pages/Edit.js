@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
-import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -11,33 +10,34 @@ import firebase, { db } from '../../firebase/index'
 
 // TODO:
 // add rating
-// add new list
 // check that checkedList is not empty
 // error
 
 const Edit = () => {
     let navigate = useNavigate()
     const { currentUser } = useContext(AuthContext)
-    const { listNames, getArrayOfLists, removeMovieFromList } = useContext(ListContext)
-    const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
+    const { movie,
+            listNames,
+            seen,
+            setSeen,
+            own,
+            setOwn,
+            dateSeen,
+            setDateSeen,
+            format,
+            setFormat,
+            checkedLists,
+            setCheckedLists,
+            listsThatContainMovie,
+            getLists,
+            getArrayOfLists, 
+            removeMovieFromList,
+            getWhatListsContainsMovie, 
+            } = useContext(ListContext)
     const { id } = useParams()
-    const [seen, setSeen] = useState(false)
-    const [own, setOwn] = useState(false)
-    const [dateSeen, setDateSeen] = useState(null)
-    const [format, setFormat] = useState("DVD")
-    const [checkedLists, setCheckedLists] = useState([])
+    // const [checkedLists, setCheckedLists] = useState([])
     const [showAddListInput, setShowAddListInput] = useState(false)
     const addListRef = useRef()
-
-    const getMovie = async () => {
-        const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=videos,similar`)
-        return res.data
-    }
-
-    const { data, error, isLoading } = useQuery(
-        ['movie'],
-        () => getMovie(id, apiKey)
-    )
 
     const handleAddList = (e) => {
         db.collection("lists").add({
@@ -56,6 +56,7 @@ const Edit = () => {
 
     useEffect(() => {
         getArrayOfLists()
+        getWhatListsContainsMovie(id)
     }, [])
 
     const handleSubmit = (e) => {
@@ -92,7 +93,7 @@ const Edit = () => {
                             // add the movie to the list?
                             db.collection("lists").doc(doc.id).update({
                                 movies: firebase.firestore.FieldValue.arrayUnion(
-                                    {...data, 
+                                    {...movie, 
                                     own, 
                                     seen, 
                                     date_seen: dateSeen, 
@@ -114,11 +115,12 @@ const Edit = () => {
             } else {
                 // remove movie from list
                 removeMovieFromList(list, id)
+                navigate('/profile')
             }
         })
     }
 
-    if(isLoading) {
+    if(!movie) {
         return (
             <div>Loading...</div>
         )
@@ -128,14 +130,14 @@ const Edit = () => {
         <div id="add">
             {/* {console.log(data)} */}
             <div className="add-info-container d-md-flex">
-                <img src={`https://image.tmdb.org/t/p/w200${data.poster_path}`}></img>
+                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}></img>
                 <div>
                     <div className="add-header">
-                        <h1>{data.title}</h1>
-                        {data.release_date}
+                        <h1>{movie.title}</h1>
+                        {movie.release_date}
                     </div>
                     <div className="add-body">
-                        <p>{data.overview}</p>
+                        <p>{movie.overview}</p>
 
                     </div>
 
@@ -147,14 +149,14 @@ const Edit = () => {
                     <div>
                         <Form.Group controlId="formSeenCheckbox">
                             <Form.Label>Seen this movie?</Form.Label>
-                            <Form.Check type="checkbox" label="Seen" onChange={e => {e.target.checked ? setSeen(true) : setSeen(false)}} />
+                            <Form.Check checked={seen} type="checkbox" label="Seen" onChange={e => {e.target.checked ? setSeen(true) : setSeen(false)}} />
                         </Form.Group>
 
                         {seen && 
                             <>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Date seen:</Form.Label>
-                                        <Form.Control type="date" onChange={e => {setDateSeen(e.target.value)}}/>
+                                        <Form.Control value={dateSeen || ''} type="date" onChange={e => {setDateSeen(e.target.value)}}/>
                                 </Form.Group>
 
                                 Here will be rating
@@ -165,7 +167,7 @@ const Edit = () => {
                     <div>
                         <Form.Group controlId="formOwnCheckbox">
                             <Form.Label>Own this movie?</Form.Label>
-                            <Form.Check type="checkbox" label="Own" onChange={e => {e.target.checked ? setOwn(true) : setOwn(false)}} />
+                            <Form.Check checked={own} type="checkbox" label="Own" onChange={e => {e.target.checked ? setOwn(true) : setOwn(false)}} />
                         </Form.Group>
 
                         {own && 
@@ -186,7 +188,9 @@ const Edit = () => {
                         <Form.Group controlId="selectList">
                             <Form.Label>Add to list/s</Form.Label>
                             {listNames.map(list => (
-                                <Form.Check 
+                                <Form.Check
+                                    defaultChecked={listsThatContainMovie.includes(list)}
+                                    key={list}
                                     type="checkbox" 
                                     label={list} 
                                     value={list} 
@@ -208,7 +212,7 @@ const Edit = () => {
                     </div>
 
                 </div>
-                <Button variant="primary" type="submit">Add</Button>
+                <Button variant="primary" type="submit">Save</Button>
             </Form>
 
         </div>

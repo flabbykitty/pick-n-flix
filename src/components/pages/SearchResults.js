@@ -80,7 +80,7 @@ const SearchResults = () => {
             )}
 
             {data.total_results > 0 && (
-				<div className="d-flex mb-3 justify-content-between align-items-center">
+				<div className="d-flex mb-3 justify-content-between align-items-baseline text-center">
 					<Button
 						onClick={() => setPage(prevPage => (data.page === 1)
 								? prevPage
