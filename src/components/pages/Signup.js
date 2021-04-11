@@ -7,6 +7,7 @@ const Signup = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfRef = useRef()
+    const usernameRef = useRef()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const {signup} = useAuth()
@@ -23,7 +24,7 @@ const Signup = () => {
 
         try {
 			setLoading(true)
-			await signup(emailRef.current.value, passwordRef.current.value)
+			await signup(emailRef.current.value, passwordRef.current.value, usernameRef.current.value)
             navigate('/')
 		} catch (e) {
 			setError(e.message)
@@ -38,6 +39,10 @@ const Signup = () => {
                     <Form.Text className="h2 mb-4">Sign up</Form.Text>
 
                     {error && (<Alert variant="danger">{error}</Alert>)}
+                    <Form.Group>
+                        <Form.Control type="text" ref={usernameRef} placeholder="Username" />
+                    </Form.Group>
+
                     <Form.Group>
                         <Form.Control type="email" ref={emailRef} placeholder="Email" />
                     </Form.Group>

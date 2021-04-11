@@ -30,7 +30,7 @@ const MovieItem = (props) => {
                 <div className="movie-item-add">
                     <div className="float-left">
                         {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
-                        {currentUser && <Link to={`/profile/add/${id}`}><Button>Add to list</Button></Link>}
+                        {currentUser && <Link to={`/profile/add/${id}`}><Button>Add</Button></Link>}
                         
                     </div>
                     <div>

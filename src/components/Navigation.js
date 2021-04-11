@@ -7,14 +7,14 @@ const Navigation = () => {
     const {currentUser} = useAuth()
 
     return (
-        <Navbar expand="lg" className="mb-5 py-3">
+        <Navbar expand="lg" className=" mb-3 mb-md-5 py-3">
             <Container>
                 <Link to="/">Pick 'n' Flix</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         {currentUser && 
-                        (<Navbar.Text className="mr-3">Signed in as: {currentUser.displayName ? curentUser.displayName : currentUser.email}</Navbar.Text>)}
+                        (<Navbar.Text className="mr-3">Signed in as: {currentUser.displayName ? currentUser.displayName : currentUser.email}</Navbar.Text>)}
                         
                         {currentUser 
                             ? 

@@ -11,8 +11,14 @@ const AuthContextProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState(null)
     const [loading, setLoading] = useState(true)
     
-    const signup = (email, password) => {
+    const signup = (email, password, username) => {
 		return auth.createUserWithEmailAndPassword(email, password)
+		.then((userCredential) => {
+			let user = userCredential.user;
+			user.updateProfile({
+				displayName: username,
+			})
+		})
 	}
 
 	const login = (email, password) => {
