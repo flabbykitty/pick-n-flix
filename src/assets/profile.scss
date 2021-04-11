@@ -41,7 +41,9 @@
         top: 0;
 
         button {
-            background-color: transparent;
+            width: 40px;
+            height: 40px;
+            background-color: $accentColorDark;
             padding: 0;
         }
     }
