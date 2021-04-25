@@ -5,11 +5,12 @@ import { useQuery } from 'react-query'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ListContext } from '../../contexts/ListContext'
+import { BsStar, BsStarFill } from "react-icons/bs";
+import Rating from 'react-rating'
 
 import firebase, { db } from '../../firebase/index'
 
 // TODO:
-// add rating
 // check that checkedList is not empty
 // error
 
@@ -18,11 +19,20 @@ const Add = () => {
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
     const { id } = useParams()
     const { currentUser } = useContext(AuthContext)
-    const { getLists, listNames, getArrayOfLists } = useContext(ListContext)
-    const [seen, setSeen] = useState(false)
-    const [own, setOwn] = useState(false)
-    const [dateSeen, setDateSeen] = useState(null)
-    const [format, setFormat] = useState("DVD")
+    const { 
+        seen,
+        setSeen,
+        own,
+        setOwn,
+        dateSeen,
+        setDateSeen,
+        format,
+        setFormat,
+        rating,
+        setRating,
+        getLists, 
+        listNames, 
+        getArrayOfLists } = useContext(ListContext)
     const [checkedLists, setCheckedLists] = useState([])
     const [showAddListInput, setShowAddListInput] = useState(false)
     const addListRef = useRef()
@@ -39,6 +49,11 @@ const Add = () => {
 
     useEffect(() => {
         getArrayOfLists()
+        setSeen(null)
+        setDateSeen(null)
+        setFormat("DVD")
+        setOwn(null)
+        setRating(null)
     }, [])
 
     const handleAddList = (e) => {
@@ -69,7 +84,8 @@ const Add = () => {
                             {...data, 
                             own, 
                             seen, 
-                            date_seen: dateSeen, 
+                            date_seen: dateSeen,
+                            rating,
                             ...(own && { format })
                             })
                     })
@@ -86,8 +102,6 @@ const Add = () => {
                 console.log("Error getting documents: ", error);
             });
         })
-
-
     }
 
     if(isLoading) {
@@ -127,8 +141,13 @@ const Add = () => {
                                     <Form.Label>Date seen:</Form.Label>
                                         <Form.Control type="date" onChange={e => {setDateSeen(e.target.value)}}/>
                                 </Form.Group>
-
-                                Here will be rating
+                                <p>Rating</p>
+                                <Rating
+                                    onClick={value => {setRating(value)}}
+                                    initialRating={rating}
+                                    emptySymbol={<BsStar size={30} />}
+                                    fullSymbol={<BsStarFill size={30} />}
+                                />
                             </>
                         }
                     </div>

@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ListContext } from '../../contexts/ListContext'
-import { useQuery } from 'react-query'
+import { BsStar, BsStarFill } from "react-icons/bs";
+import Rating from 'react-rating'
 
 
 import firebase, { db } from '../../firebase/index'
@@ -26,16 +27,17 @@ const Edit = () => {
             setDateSeen,
             format,
             setFormat,
+            rating,
+            setRating,
             checkedLists,
             setCheckedLists,
             listsThatContainMovie,
             getLists,
             getArrayOfLists, 
             removeMovieFromList,
-            getWhatListsContainsMovie, 
+            getWhatListsContainsMovie,
             } = useContext(ListContext)
     const { id } = useParams()
-    // const [checkedLists, setCheckedLists] = useState([])
     const [showAddListInput, setShowAddListInput] = useState(false)
     const addListRef = useRef()
 
@@ -67,10 +69,9 @@ const Edit = () => {
         listNames.forEach(list => {
             if(checkedLists.includes(list)) {
                 // update the movie
-                db.collection("lists").where("user_id", "==", currentUser.uid).get()
+                db.collection("lists").where("user_id", "==", currentUser.uid).where("list_name", "==", list).get()
                 .then((snap) => {
-                    console.log(snap)
-                    // for each list, check if the movie exists in there
+                    // for each list, check if the movie exists in there and if the current checked list is
                     snap.forEach(doc => {
                         let updatedMovie = doc.data().movies.find(m => m.id == id)
                         if(updatedMovie) {
@@ -78,6 +79,7 @@ const Edit = () => {
                             updatedMovie.format = format
                             updatedMovie.seen = seen
                             updatedMovie.date_seen = dateSeen
+                            updatedMovie.rating = rating
                             const newMoviesArray = doc.data().movies.filter(m => m.id != id)
                             newMoviesArray.push(updatedMovie)
                             db.collection("lists").doc(doc.id).set({
@@ -96,7 +98,8 @@ const Edit = () => {
                                     {...movie, 
                                     own, 
                                     seen, 
-                                    date_seen: dateSeen, 
+                                    date_seen: dateSeen,
+                                    rating,
                                     ...(own && { format })
                                     })
                             })
@@ -113,14 +116,13 @@ const Edit = () => {
                     // TODO: ERROR
                 })
             } else {
-                // remove movie from list
+                // remove movie from list and then navigate
                 removeMovieFromList(list, id)
-                navigate('/profile')
             }
         })
     }
 
-    if(!movie) {
+    if(!movie || listsThatContainMovie.length <= 0) {
         return (
             <div>Loading...</div>
         )
@@ -138,7 +140,6 @@ const Edit = () => {
                     </div>
                     <div className="add-body">
                         <p>{movie.overview}</p>
-
                     </div>
 
                 </div>
@@ -149,17 +150,23 @@ const Edit = () => {
                     <div>
                         <Form.Group controlId="formSeenCheckbox">
                             <Form.Label>Seen this movie?</Form.Label>
-                            <Form.Check checked={seen} type="checkbox" label="Seen" onChange={e => {e.target.checked ? setSeen(true) : setSeen(false)}} />
+                            <Form.Check defaultChecked={seen} type="checkbox" label="Seen" onChange={e => {e.target.checked ? setSeen(true) : setSeen(false)}} />
                         </Form.Group>
 
                         {seen && 
                             <>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Date seen:</Form.Label>
-                                        <Form.Control value={dateSeen || ''} type="date" onChange={e => {setDateSeen(e.target.value)}}/>
+                                        <Form.Control defaultValue={dateSeen || ''} type="date" onChange={e => {setDateSeen(e.target.value)}}/>
                                 </Form.Group>
 
-                                Here will be rating
+                                <p>Rating:</p>
+                                <Rating
+                                    onClick={value => {setRating(value)}}
+                                    initialRating={rating || 0}
+                                    emptySymbol={<BsStar size={30} />}
+                                    fullSymbol={<BsStarFill size={30} />}
+                                />
                             </>
                         }
                     </div>
@@ -167,7 +174,7 @@ const Edit = () => {
                     <div>
                         <Form.Group controlId="formOwnCheckbox">
                             <Form.Label>Own this movie?</Form.Label>
-                            <Form.Check checked={own} type="checkbox" label="Own" onChange={e => {e.target.checked ? setOwn(true) : setOwn(false)}} />
+                            <Form.Check defaultChecked={own} type="checkbox" label="Own" onChange={e => {e.target.checked ? setOwn(true) : setOwn(false)}} />
                         </Form.Group>
 
                         {own && 
@@ -190,7 +197,6 @@ const Edit = () => {
                             {listNames.map(list => (
                                 <Form.Check
                                     defaultChecked={listsThatContainMovie.includes(list)}
-                                    key={list}
                                     type="checkbox" 
                                     label={list} 
                                     value={list} 
