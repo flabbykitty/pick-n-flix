@@ -17,10 +17,10 @@ const MovieItem = (props) => {
 
     return (
         <>
-            {props.type === 'edit' ? (
+            {props.type === 'edit' && (
                 <li>
                 {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
-                    {title} ({release_date.substring(0,4)})
+                    <Link to={`/movie/${id}`}>{title}</Link> ({release_date.substring(0,4)})
                     <div className="edit-buttons">
                         {currentUser && <Link to={`/profile/edit/${id}`}>
                         <Button>
@@ -31,7 +31,16 @@ const MovieItem = (props) => {
                         </Button>
                     </div>
                 </li>
-            ) : (
+            )}
+
+            {props.type === 'trending' && (
+                <div className="movie-item-trending">
+                    <Link to={`/movie/${id}`}>{poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}</Link>
+                    
+                </div>
+            )}
+
+            {!props.type && (
                 <div className="movie-item-add">
                     <div className="float-left">
                         {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
@@ -44,7 +53,6 @@ const MovieItem = (props) => {
                         <p>{overview}</p>
                     </div>
                 </div>
-
             )}
         </>
     )
