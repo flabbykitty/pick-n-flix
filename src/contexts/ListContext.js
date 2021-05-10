@@ -94,25 +94,6 @@ const ListContextProvider = (props) => {
         });
 	}
 
-
-	const getList = (userId, listName) => {}
-
-	const addMovieToList = (lists, movie) => {
-		// check if the movie already exists in the list
-		console.log(list, movie)
-		// lists.forEach(list => {
-		// 	add movie to list
-		// })
-	}
-
-	const addList = (list) => {
-
-	}
-
-	const removeList = (list) => {
-
-	}
-
 	const removeMovieFromList = (list, movie) => {
 		db.collection("lists").where("list_name", "==", list).get()
         .then((snap) => {

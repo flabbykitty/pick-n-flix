@@ -56,14 +56,13 @@ const Add = () => {
         setRating(null)
     }, [])
 
-    const handleAddList = (e) => {
+    const handleAddList = () => {
         db.collection("lists").add({
             list_name: addListRef.current.value,
             user_id: currentUser.uid
         })
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            getLists()
+        .then(() => {
+            getArrayOfLists()
             setShowAddListInput(false)
         })
         .catch((error) => {

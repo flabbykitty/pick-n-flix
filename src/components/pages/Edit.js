@@ -118,6 +118,7 @@ const Edit = () => {
             } else {
                 // remove movie from list and then navigate
                 removeMovieFromList(list, id)
+				navigate('/profile')
             }
         })
     }
