@@ -39,7 +39,7 @@ const MovieItem = (props) => {
                         
                     </div>
                     <div>
-                        <h1>{title}</h1>
+                        <Link to={`/movie/${id}`}><h1>{title}</h1></Link>
                         <span>{release_date}</span>
                         <p>{overview}</p>
                     </div>

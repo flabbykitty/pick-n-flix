@@ -15,6 +15,7 @@ import SearchResults from './components/pages/SearchResults'
 import Add from './components/pages/Add'
 import Edit from './components/pages/Edit'
 import Profile from './components/pages/Profile'
+import Movie from './components/pages/Movie'
 
 
 const App = () => {
@@ -62,6 +63,10 @@ const App = () => {
 
 							<Route path="/profile/">
 								<Profile />
+							</Route>
+
+							<Route path="/movie/:id">
+								<Movie />
 							</Route>
 						</Routes>
 					</Container>
