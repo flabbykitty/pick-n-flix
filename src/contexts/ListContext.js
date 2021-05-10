@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { db } from '../firebase'
 import { AuthContext } from './AuthContext'
 
@@ -16,6 +16,7 @@ const ListContextProvider = (props) => {
 	const [listsThatContainMovie, setListsThatContainMovie] = useState([])
 	const [movie, setMovie] = useState(null)
 	const [seen, setSeen] = useState(false)
+	const [rating, setRating] = useState(null)
     const [own, setOwn] = useState(false)
     const [dateSeen, setDateSeen] = useState(null)
     const [format, setFormat] = useState("DVD")
@@ -38,6 +39,7 @@ const ListContextProvider = (props) => {
 
 	// get an array of the lists of that user that contain a specific movie
 	const getWhatListsContainsMovie = (movie) => {
+		setListsThatContainMovie([])
 		if(currentUser.uid) {
 			db.collection('lists').where("user_id", "==", currentUser.uid)
 			.get()
@@ -65,12 +67,12 @@ const ListContextProvider = (props) => {
         .then((snap) => {
             snap.forEach(doc => {
 				const tempMovie = doc.data().movies.find(m => m.id == movie)
-				console.log('tempMovie', tempMovie)
 				setMovie(tempMovie)
 				setSeen(tempMovie.seen)
 				setOwn(tempMovie.own)
 				setDateSeen(tempMovie.date_seen)
 				setFormat(tempMovie.format || "DVD")
+				setRating(tempMovie.rating)
 			})
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -115,11 +117,14 @@ const ListContextProvider = (props) => {
 		db.collection("lists").where("list_name", "==", list).get()
         .then((snap) => {
             snap.forEach(doc => {
-                db.collection("lists").doc(doc.id).set({
-                    ...doc.data(), movies: doc.data().movies.filter(m => m.id != movie)
-                })
+                db.collection("lists").doc(doc.id).update({
+                    movies: doc.data().movies.filter(m => m.id != movie)
+                }).then(() => {
+					getLists()
+				}).catch((error) => {
+					console.log("Error updating document:", error);
+				})
             })
-			getLists()
         }).catch((error) => {
             console.log("Error getting document:", error);
         })
@@ -127,6 +132,7 @@ const ListContextProvider = (props) => {
 
 	const contextValues = {
 		lists,
+		setLists,
 		movie,
 		seen,
 		setSeen,
@@ -136,6 +142,8 @@ const ListContextProvider = (props) => {
 		setDateSeen,
 		format,
 		setFormat,
+		rating,
+		setRating,
 		checkedLists,
 		setCheckedLists,
 		listNames,
