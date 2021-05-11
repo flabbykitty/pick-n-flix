@@ -10,22 +10,19 @@ const MovieItem = (props) => {
     let poster = null
     const {currentUser} = useAuth()
     const { removeMovieFromList } = useList()
-    
-    if(poster_path) {
-        poster = `https://image.tmdb.org/t/p/w200${poster_path}`
-    }
 
     return (
         <>
             {props.type === 'edit' && (
-                <li>
-                {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
-                    <Link to={`/movie/${id}`}>{title}</Link> ({release_date.substring(0,4)})
+                <li className="movie-item-edit">
+                    {poster ? <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}
+                    <Link className="movie-item-title" to={`/movie/${id}`}>{title}</Link>
                     <div className="edit-buttons">
                         {currentUser && <Link to={`/profile/edit/${id}`}>
-                        <Button>
-                            <BsPencil/>
-                        </Button></Link>}
+                            <Button>
+                                <BsPencil/>
+                            </Button>
+                        </Link>}
                         <Button className="ml-2" onClick={()=> {removeMovieFromList(props.list, id)}}>
                             <BsTrash/>
                         </Button>

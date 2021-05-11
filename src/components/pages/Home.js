@@ -36,7 +36,7 @@ const Home = () => {
             <div className="movie-list-trending">
             {data.results ? (
                 <>
-                {data.results.slice(0, 5).map((movie, index) => (
+                {data.results.slice(0, 10).map((movie, index) => (
                     <MovieItem key={index} movie={movie} type='trending' />
                 ))}
                 </>
