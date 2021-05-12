@@ -20,7 +20,7 @@ const Profile = () => {
             <>
                 <h1>{currentUser.displayName ? currentUser.displayName : currentUser.email}</h1>
                 {lists.length > 0 ? (
-                    <div className="grid-container">
+                    <div className="movie-list-container">
 
                         {lists.map(l => (
                             <List list={l}/>

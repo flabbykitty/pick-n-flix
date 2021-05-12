@@ -1,0 +1,166 @@
+#movie {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .movie-poster {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        img {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    button {
+        border-radius: 0;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .movie-card {
+        background-color: $accentColorLight;
+        color: $lightColor;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+
+        a {
+            color: $lightColor;
+        }
+    }
+
+    .backdrop-container {
+        position: relative;
+        margin-bottom: 1rem;
+
+        img {
+            width: 100%;
+        }
+
+        .backdrop-tagline {
+            max-width: 90%;
+            position: absolute;
+            background-color: $accentColorLight;
+            color: $lightColor;
+            bottom: 0;
+            padding: 0.25rem 0.5rem 0.25rem 2.5rem;
+        }
+    }
+
+    .movie-trailer {
+        position: relative;
+        padding-bottom: 56.25%;
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .movie-similar {
+        background-color: $accentColorLight;
+        color: $lightColor;
+        padding: 1rem;
+        margin-top: 1rem;
+
+        a {
+            display: block;
+            color: $lightColor;
+        }
+    }
+
+    .movie-similar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 1rem;
+
+        img {
+            height:100%;
+            width:100%;
+            object-fit: contain;
+        }
+    }
+
+    .movie-cast-crew {
+        background-color: $accentColorLight;
+        color: $lightColor;
+        padding: 1rem;
+        margin: 1rem 0;
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .movie-cast {
+            ul {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                grid-gap: 1rem;
+            }
+
+            .movie-cast-item {
+                position: relative;
+
+                p {
+                    position: absolute;
+                    background-color: $accentColorLight;
+                    padding: 0.25rem 0.4rem;
+                }
+
+                img {
+                    width: 100%;
+                }
+
+                .movie-cast-item-character {
+                    bottom: 40px;
+                    max-width: 95%;
+                }
+
+                .movie-cast-item-name {
+                    bottom: 0;
+                    right: 0;
+                    max-width: 95%;
+                }
+            }
+        }
+    }
+
+
+
+    // sm Tablet 768px
+    @media only screen and (min-width: 768px) {
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        .movie-cast-crew {
+            .movie-cast {
+                ul {
+                    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                }
+            }
+        }
+    }
+
+    // md small laptops 992px
+
+    @media only screen and (min-width: 992px) {
+        
+    }
+
+    // lg laptops and desktop 1200px
+
+    @media only screen and (min-width: 1200px) {
+        
+    }
+}

@@ -1,0 +1,33 @@
+#home {
+
+    .movie-list-trending {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 1rem;
+
+        img {
+            width: 100%;
+        }
+    }
+
+
+    // sm Tablet 768px
+    @media only screen and (min-width: 768px) {
+        .movie-list-trending {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+    }
+    
+    
+    // md small laptops 992px
+    
+    @media only screen and (min-width: 992px) {
+        
+    }
+    
+    // lg laptops and desktop 1200px
+    
+    @media only screen and (min-width: 1200px) {
+        
+    }
+}

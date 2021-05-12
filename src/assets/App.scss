@@ -29,11 +29,11 @@ nav {
     background-color: $accentColorDark;
     
     a {
-        color: $darkColor;
+        color: $lightColor;
     }
 
     a:hover {
-        color: $darkColor;
+        color: $lightColor;
     }
 }
 
@@ -98,7 +98,7 @@ nav {
     form {
         display: flex;
         align-items: center;
-        margin-bottom: 2rem;
+        margin: 2rem 0 4.5rem 0;
     }
 
     .form-group {

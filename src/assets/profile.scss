@@ -2,70 +2,97 @@
 
     h1 {
         margin-bottom: 40px;
+        color: $accentColorDark;
+    }
+
+    .movie-list {
+        margin-bottom: 2rem;
     }
     
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
+    .movie-list-container {
+        // display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        // gap: 20px;
 
         h1 {
             background-color: $accentColorDark;
             padding: 10px;
             margin-bottom: 15px;
+            color: $lightColor;
         }
-    }
+
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            grid-gap: 1rem;
+            margin: 0;
     
-    ul {
-        list-style: none;
-
-        li {
-            margin-bottom: 15px;
-            position: relative
+    
+            li {
+    
+                img {
+                    width: 100%;
+                }
+            }
+    
+            li:hover .edit-buttons {
+                display: inline-block
+             }
         }
 
-        li:hover .edit-buttons {
-            display: inline-block
-         }
+        .list-sorting {
+            display: flex;
+            justify-content: space-between;
+        }
 
-        img {
-            max-height:100px;
-            margin-right: 10px;
+        .movie-item-edit {
+            position: relative;
         }
     }
+
+    
 
     .edit-buttons {
         display: none;
         position: absolute;
         right: 0;
         top: 0;
+        margin-right:0.5rem;
 
         button {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             background-color: $accentColorDark;
             padding: 0;
         }
+
+        button:hover {
+            background-color: $accentColorLight;
+        }
     }
 
-}
+    // sm Tablet 768px
+    @media only screen and (min-width: 768px) {
 
-
-
-// sm Tablet 768px
-@media only screen and (min-width: 768px) {
+        .grid-container {
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        }
+        
+    }
     
+    
+    // md small laptops 992px
+    
+    @media only screen and (min-width: 992px) {
+      
+    }
+    
+    // lg laptops and desktop 1200px
+    
+    @media only screen and (min-width: 1200px) {
+      
+    }
 }
 
 
-// md small laptops 992px
-
-@media only screen and (min-width: 992px) {
-  
-}
-
-// lg laptops and desktop 1200px
-
-@media only screen and (min-width: 1200px) {
-  
-}
