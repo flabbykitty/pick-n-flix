@@ -1,15 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {useLocation} from 'react-router-dom'
 import axios from 'axios';
-import {useQuery} from 'react-query'
+import { useQuery } from 'react-query'
 import MovieItem from '../MovieItem'
 import SearchBar from '../SearchBar'
-import {Button} from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 const SearchResults = () => {
-    const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY;
+    const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
     const query = new URLSearchParams(useLocation().search).get('query')
     const [page, setPage] = useState(1)
+    const [yearFrom, setYearFrom] = useState(null)
+    const [yearTo, setYearTo] = useState(null)
+	const yearRange = []
 
     const searchMovies = async (apiKey, query, page) => {
         const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${query}&page=${page}&include_adult=false`)
@@ -21,7 +24,6 @@ const SearchResults = () => {
         () => searchMovies(apiKey, query, page),
         { keepPreviousData: true }
       )
-
 
     useEffect(() => {
         setPage(1)
@@ -41,10 +43,32 @@ const SearchResults = () => {
 			</div>
 		)
     }
+
+	for (let i = 2021; i > 1900; i--) {
+		yearRange.push(<option>{i}</option>)
+	}
     
     return (
         <div id="search-results">
             <SearchBar/>
+			<Form className="d-flex">
+				<Form.Group controlId="selectYearFrom">
+					<Form.Label>Year from</Form.Label>
+					<Form.Control as="select" custom onChange={e => setYearFrom(e.target.value)}>
+					{yearRange.map(s => {
+						return s
+					})}
+					</Form.Control>
+				</Form.Group>
+				<Form.Group controlId="selectYearTo">
+					<Form.Label>Year to</Form.Label>
+					<Form.Control as="select" custom onChange={e => setYearTo(e.target.value)}>
+					{yearRange.map(s => {
+						return s
+					})}
+					</Form.Control>
+				</Form.Group>
+			</Form>
 			
             <h1>{data.total_results} {data.total_results === 1 ? 'result' : 'results'} for '{query}'</h1>
 
@@ -69,10 +93,22 @@ const SearchResults = () => {
 				</>
 			)}
 
-            {data && (
+            {data.results && (
                 <>
                     <div className="grid-container">
-                        {data.results.map((movie, index) => (
+						{yearFrom && !yearTo && data.results.filter(m => m.release_date.substring(0,4) >= yearFrom).map((movie, index) => (
+                            <MovieItem key={index} movie={movie} />
+                        ))}
+
+						{yearTo && !yearFrom && data.results.filter(m => yearTo >= m.release_date.substring(0,4)).map((movie, index) => (
+                            <MovieItem key={index} movie={movie} />
+                        ))}
+
+						{yearFrom && yearTo && data.results.filter(m => yearTo >= m.release_date.substring(0,4) && m.release_date.substring(0,4) >= yearFrom).map((movie, index) => (
+                            <MovieItem key={index} movie={movie} />
+                        ))}
+
+                        {(!yearFrom && !yearTo) && data.results.map((movie, index) => (
                             <MovieItem key={index} movie={movie} />
                         ))}
                     </div>
