@@ -7,7 +7,6 @@ import { BsPencil, BsTrash } from "react-icons/bs";
 
 const MovieItem = (props) => {
     const {title, overview, release_date, poster_path, id} = props.movie
-    let poster = null
     const {currentUser} = useAuth()
     const { removeMovieFromList } = useList()
 
@@ -15,8 +14,9 @@ const MovieItem = (props) => {
         <>
             {props.type === 'edit' && (
                 <li className="movie-item-edit">
-                    {poster ? <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}
-                    <Link className="movie-item-title" to={`/movie/${id}`}>{title}</Link>
+                    <Link to ={`/movie/${id}`}>
+                        {poster_path ? <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}
+                    </Link>
                     <div className="edit-buttons">
                         {currentUser && <Link to={`/profile/edit/${id}`}>
                             <Button>
@@ -32,7 +32,7 @@ const MovieItem = (props) => {
 
             {props.type === 'trending' && (
                 <div className="movie-item-trending">
-                    <Link to={`/movie/${id}`}>{poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}</Link>
+                    <Link to={`/movie/${id}`}>{poster_path ? <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}</Link>
                     
                 </div>
             )}
@@ -40,7 +40,7 @@ const MovieItem = (props) => {
             {!props.type && (
                 <div className="movie-item-add">
                     <div className="float-left">
-                        {poster ? <img src={poster}/> : <img src="https://via.placeholder.com/200x250"/>}
+                        {poster_path ? <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}/> : <img src="https://via.placeholder.com/200x250"/>}
                         {currentUser && <Link to={`/profile/add/${id}`}><Button>Add</Button></Link>}
                         
                     </div>

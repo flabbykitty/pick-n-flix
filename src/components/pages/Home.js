@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 const Home = () => {
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
 
-    const getMovies = async (apiKey, query, page) => {
+    const getMovies = async (apiKey) => {
         const res = await axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`)
         return res.data
     }

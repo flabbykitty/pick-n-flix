@@ -16,6 +16,7 @@ import Add from './components/pages/Add'
 import Edit from './components/pages/Edit'
 import Profile from './components/pages/Profile'
 import Movie from './components/pages/Movie'
+import Footer from './components/Footer'
 
 
 const App = () => {
@@ -70,6 +71,8 @@ const App = () => {
 							</Route>
 						</Routes>
 					</Container>
+
+					<Footer/>
 
 				</ListContextProvder>
 				
