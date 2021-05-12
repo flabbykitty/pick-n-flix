@@ -1,12 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 import { ListContext } from '../../contexts/ListContext'
-import MovieItem from '../MovieItem'
 import SearchBar from '../SearchBar'
-
-// TODO:
-// Edit list
-// If the list doesn't have any movies, prompt the user to add movies
+import List from '../List'
 
 const Profile = () => {
     const { currentUser } = useContext(AuthContext)
@@ -27,21 +23,9 @@ const Profile = () => {
                     <div className="grid-container">
 
                         {lists.map(l => (
-                            <div>
-                                <h1>{l.list_name}</h1>
-                                <ul>
-                                {l.movies && l.movies.length > 0 ? (
-                                    <>
-                                        {l.movies.map(m => (
-                                            <MovieItem movie={m} list={l.list_name} type='edit'/>
-                                        ))}
-                                    </>
-                                ) : (
-                                    <p>Add some movies</p>
-                                )}
-                                </ul>
-                            </div>
+                            <List list={l}/>
                         ))}
+
                     </div>
                 ) : (
                     <div className="text-center">
