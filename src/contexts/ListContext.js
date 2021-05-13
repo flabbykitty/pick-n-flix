@@ -139,8 +139,6 @@ const ListContextProvider = (props) => {
 	return (
 		<ListContext.Provider value={contextValues}>
 			{props.children}
-			{/* {loading && (<div>Loading...</div>)} */}
-			{/* {!loading && props.children} */}
 		</ListContext.Provider>
 	)
 }

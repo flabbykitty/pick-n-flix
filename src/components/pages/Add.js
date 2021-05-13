@@ -11,10 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import firebase, { db } from '../../firebase/index'
 
-// TODO:
-// check that checkedList is not empty
-// error
-
 const Add = () => {
     let navigate = useNavigate()
     const apiKey = process.env.REACT_APP_THE_MOVIE_DB_API_KEY
@@ -31,7 +27,6 @@ const Add = () => {
         setFormat,
         rating,
         setRating,
-        getLists, 
         listNames, 
         getArrayOfLists } = useContext(ListContext)
     const [checkedLists, setCheckedLists] = useState([])
@@ -99,7 +94,6 @@ const Add = () => {
                     })
                     .then(() => {
                         navigate('/profile')
-                        console.log("Document successfully written!");
                     })
                     .catch((error) => {
                         console.error("Error writing document: ", error);
@@ -120,7 +114,6 @@ const Add = () => {
 
     return (
         <div id="add">
-            {/* {console.log(data)} */}
             <div className="add-info-container d-md-flex">
                 <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}></img>
                 <div>

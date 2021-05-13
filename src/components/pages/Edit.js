@@ -40,7 +40,7 @@ const Edit = () => {
             list_name: addListRef.current.value,
             user_id: currentUser.uid
         })
-        .then((docRef) => {
+        .then(() => {
             getLists()
             setShowAddListInput(false)
         })
@@ -124,7 +124,6 @@ const Edit = () => {
 
     return (
         <div id="add">
-            {/* {console.log(data)} */}
             <div className="add-info-container d-md-flex">
                 <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}></img>
                 <div>
