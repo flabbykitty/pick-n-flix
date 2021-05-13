@@ -7,6 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { ListContext } from '../../contexts/ListContext'
 import { BsStar, BsStarFill } from "react-icons/bs";
 import Rating from 'react-rating'
+import { ToastContainer, toast } from 'react-toastify';
 
 import firebase, { db } from '../../firebase/index'
 
@@ -73,6 +74,14 @@ const Add = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        if(checkedLists.length <= 0) {
+            toast.error("Please choose a list!", {
+                position: "top-center",
+                autoClose: 2000,
+            });
+            return
+        }
+
         checkedLists.forEach(m => {
             db.collection("lists").where("list_name", "==", m).where("user_id", "==", currentUser.uid)
             .get()
@@ -113,7 +122,7 @@ const Add = () => {
         <div id="add">
             {/* {console.log(data)} */}
             <div className="add-info-container d-md-flex">
-                <img src={`https://image.tmdb.org/t/p/w200${data.poster_path}`}></img>
+                <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}></img>
                 <div>
                     <div className="add-header">
                         <h1>{data.title}</h1>
@@ -196,6 +205,8 @@ const Add = () => {
                         </Form.Group>
                     </div>
                 </div>
+
+                <ToastContainer/>
 
                 <Button variant="primary" type="submit">Add</Button>
             </Form>

@@ -6,13 +6,7 @@ import { ListContext } from '../../contexts/ListContext'
 import { BsStar, BsStarFill } from "react-icons/bs";
 import Rating from 'react-rating'
 
-
 import firebase, { db } from '../../firebase/index'
-
-// TODO:
-// add rating
-// check that checkedList is not empty
-// error
 
 const Edit = () => {
     let navigate = useNavigate()
@@ -41,13 +35,12 @@ const Edit = () => {
     const [showAddListInput, setShowAddListInput] = useState(false)
     const addListRef = useRef()
 
-    const handleAddList = (e) => {
+    const handleAddList = () => {
         db.collection("lists").add({
             list_name: addListRef.current.value,
             user_id: currentUser.uid
         })
         .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
             getLists()
             setShowAddListInput(false)
         })
@@ -133,7 +126,7 @@ const Edit = () => {
         <div id="add">
             {/* {console.log(data)} */}
             <div className="add-info-container d-md-flex">
-                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}></img>
+                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}></img>
                 <div>
                     <div className="add-header">
                         <h1>{movie.title}</h1>
