@@ -21,9 +21,13 @@ const List = (props) => {
         if(sortYear === 1 || sortYear === 0) {
             movies.sort((a, b) => a.release_date.slice(0, 4) - b.release_date.slice(0, 4))
             setSortYear(2)
+            setSortAlph(0)
+            setSortRating(0)
         } else {
             movies.sort((a, b) => b.release_date.slice(0, 4) - a.release_date.slice(0, 4))
             setSortYear(1)
+            setSortAlph(0)
+            setSortRating(0)
         }
     }
 
@@ -31,9 +35,13 @@ const List = (props) => {
         if(sortAlph === 1 || sortAlph === 0) {
             movies.sort((a, b) => a.title.localeCompare(b.title))
             setSortAlph(2)
+            setSortRating(0)
+            setSortYear(0)
         } else {
             movies.sort((a, b) => b.title.localeCompare(a.title))
             setSortAlph(1)
+            setSortRating(0)
+            setSortYear(0)
         }
     }
 
@@ -41,9 +49,13 @@ const List = (props) => {
         if(sortRating === 1 || sortRating === 0) {
             movies.sort((a, b) => a.rating - b.rating)
             setSortRating(2)
+            setSortAlph(0)
+            setSortYear(0)
         } else {
             movies.sort((a, b) => b.rating - a.rating)
             setSortRating(1)
+            setSortAlph(0)
+            setSortYear(0)
         }
     }
 
@@ -68,7 +80,11 @@ const List = (props) => {
                 });
             })
         }).catch((error) => {
-            console.log("Error getting document:", error);
+            toast.error(error, {
+                position: "top-center",
+                autoClose: 2000,
+            });
+            setShow(false)
         })
     }
 
