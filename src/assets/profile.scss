@@ -7,12 +7,19 @@
 
     .movie-list {
         margin-bottom: 2rem;
+        position: relative;
+
+        p:not(.sort-button) {
+            position: absolute;
+            top: 0;
+            right: 0.5rem;
+            color: $lightColor;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
     }
     
     .movie-list-container {
-        // display: grid;
-        // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        // gap: 20px;
 
         h1 {
             background-color: $accentColorDark;
@@ -43,7 +50,16 @@
 
         .list-sorting {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+
+            .sort-button {
+                cursor: pointer;
+                padding-right: 2rem;
+            }
+
+            :last-child {
+                padding-right: 0;
+            }
         }
 
         .movie-item-edit {
@@ -72,6 +88,13 @@
         }
     }
 
+    /* smartphones, touchscreens */
+    @media (hover: none) and (pointer: coarse) {
+        .edit-buttons {
+            display: block;
+        }
+    }
+
     // sm Tablet 768px
     @media only screen and (min-width: 768px) {
 
@@ -94,5 +117,3 @@
       
     }
 }
-
-

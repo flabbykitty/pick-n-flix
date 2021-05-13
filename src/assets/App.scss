@@ -113,6 +113,18 @@ nav {
     }
 }
 
+.Toastify__toast-container {
+    width: 50%;
+}
+
+.Toastify__toast--error {
+    background-color: $accentColorDark;
+}
+
+.Toastify__toast--success {
+    background-color: #3FA906;
+}
+
 // sm Tablet 768px
 @media only screen and (min-width: 768px) {
     
