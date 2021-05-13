@@ -208,7 +208,10 @@ const Add = () => {
 
                 <ToastContainer/>
 
-                <Button variant="primary" type="submit">Add</Button>
+                <div className="d-flex justify-content-between p-0">
+                    <Button variant="primary" type="submit">Add</Button>
+                    <Button variant="primary" type="button" onClick={() => navigate(`/movie/${id}`, { replace: true })}>Cancel</Button>
+                </div>
             </Form>
 
         </div>

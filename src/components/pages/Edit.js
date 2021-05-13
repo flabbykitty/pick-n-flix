@@ -212,7 +212,11 @@ const Edit = () => {
                     </div>
 
                 </div>
-                <Button variant="primary" type="submit">Save</Button>
+
+                <div className="d-flex justify-content-between p-0">
+                    <Button variant="primary" type="submit">Save</Button>
+                    <Button variant="primary" type="button" onClick={() => navigate('/profile')}>Cancel</Button>
+                </div>
             </Form>
 
         </div>
